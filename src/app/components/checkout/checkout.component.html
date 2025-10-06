@@ -1,2 +1,20 @@
-<h2>Plaćanje</h2>
-<p>Ovaj deo ćemo povezati sa backendom kasnije.</p>
+<div class="checkout-container">
+  <h2>Završetak kupovine</h2>
+
+  <div class="cart-summary">
+    <h3>Vaša korpa</h3>
+    <div *ngFor="let item of cartItems" class="item">
+      {{ item.name }} - {{ item.price | currency:'RSD' }}
+    </div>
+    <p class="total">Ukupno: {{ total | currency:'RSD' }}</p>
+  </div>
+
+  <h3>Podaci za isporuku</h3>
+  <form (ngSubmit)="submitOrder()" #checkoutForm="ngForm">
+    <input type="text" placeholder="Ime i prezime" [(ngModel)]="name" name="name" required />
+    <input type="text" placeholder="Adresa" [(ngModel)]="address" name="address" required />
+    <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+
+    <button type="submit">Idi na plaćanje</button>
+  </form>
+</div>

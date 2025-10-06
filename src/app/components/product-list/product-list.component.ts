@@ -1,32 +1,32 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, OnInit } from '@angular/core';
+import { ServerService, Product } from '../../services/server.service';
 import { CartService } from '../../services/cart.service';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
+  imports: [CommonModule]
 })
-export class ProductListComponent {
-  products = [
-    { id: 1, name: 'Laptop', price: 800, description: 'Snažan laptop za posao i zabavu.' },
-    { id: 2, name: 'Telefon', price: 500, description: 'Moderan pametni telefon.' },
-    { id: 3, name: 'Monitor', price: 300, description: 'Full HD monitor od 27 inča.' }
-  ];
+export class ProductListComponent implements OnInit {
+  products: Product[] = [];
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private server: ServerService, private cart: CartService) {}
 
-  addToCart(product: any) {
-    this.cartService.addToCart(product);
-    alert(`${product.name} dodat u korpu ✅`);
+  ngOnInit(): void {
+    this.loadProducts();
   }
 
-  viewDetails(product: any) {
-    this.router.navigate(['/product', product.id], { state: { product } });
+  loadProducts(): void {
+    this.server.getProducts().subscribe({
+      next: (data) => this.products = data,
+      error: (err) => console.error('Greška pri učitavanju proizvoda:', err)
+    });
+  }
+
+  addToCart(product: Product): void {
+    this.cart.addToCart(product);
   }
 }

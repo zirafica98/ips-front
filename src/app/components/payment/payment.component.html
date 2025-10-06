@@ -1,0 +1,24 @@
+<div class="payment-container">
+  <h2>IPS Plaćanje</h2>
+
+  <div class="message" [ngClass]="paymentStatus">{{ message }}</div>
+
+  <div *ngIf="qrCodeUrl" class="qr-section">
+    <img [src]="qrCodeUrl" alt="IPS QR kod" class="qr-image" />
+    <p class="instruction">
+      Otvorite vašu mobilnu aplikaciju banke i skenirajte ovaj kod.
+    </p>
+
+    <button class="check-btn" (click)="checkStatus()" [disabled]="paymentStatus === 'loading'">
+      🔄 Proveri status plaćanja
+    </button>
+  </div>
+
+  <div *ngIf="paymentStatus === 'success'" class="success-msg">
+    <p>🎉 Hvala! Vaša porudžbina je uspešno plaćena.</p>
+  </div>
+
+  <div *ngIf="paymentStatus === 'fail'" class="fail-msg">
+    <p>⚠️ Plaćanje nije uspelo. Pokušajte ponovo.</p>
+  </div>
+</div>

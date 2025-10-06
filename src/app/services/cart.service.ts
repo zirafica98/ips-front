@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Product } from './server.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class CartService {
-  private items: any[] = [];
+  private items: Product[] = [];
 
-  addToCart(product: any) {
+  addToCart(product: Product) {
     this.items.push(product);
   }
 
@@ -14,6 +17,9 @@ export class CartService {
 
   clearCart() {
     this.items = [];
-    return this.items;
+  }
+
+  getTotal(): number {
+    return this.items.reduce((sum, item) => sum + item.price, 0);
   }
 }
