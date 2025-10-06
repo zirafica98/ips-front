@@ -1,0 +1,24 @@
+.cart-card {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 15px;
+}
+
+.total {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 1.1em;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.empty {
+  text-align: center;
+  font-style: italic;
+  margin-top: 30px;
+  color: #777;
+}

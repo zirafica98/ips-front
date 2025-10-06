@@ -1,0 +1,16 @@
+<h2>Detalji o proizvodu</h2>
+
+<mat-card *ngIf="product">
+  <mat-card-header>
+    <mat-card-title>{{ product.name }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>Cena:</strong> {{ product.price }} €</p>
+    <p><strong>Opis:</strong> {{ product.description }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addToCart()">Dodaj u korpu</button>
+  </mat-card-actions>
+</mat-card>

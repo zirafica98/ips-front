@@ -1,0 +1,22 @@
+<h2>🛒 Tvoja korpa</h2>
+
+<mat-card *ngIf="items.length > 0; else emptyCart" class="cart-card">
+  <mat-list>
+    <mat-list-item *ngFor="let item of items">
+      {{ item.name }} — {{ item.price }} €
+    </mat-list-item>
+  </mat-list>
+
+  <div class="total">
+    <p><strong>Ukupno:</strong> {{ total }} €</p>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button color="warn" (click)="clearCart()">Isprazni korpu</button>
+    <a mat-raised-button color="primary" routerLink="/checkout">Nastavi na plaćanje</a>
+  </div>
+</mat-card>
+
+<ng-template #emptyCart>
+  <p class="empty">Korpa je trenutno prazna 🛍️</p>
+</ng-template>
