@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:5050/api'
+  apiUrl: 'https://ips-backend-i7l9.onrender.com/api'
 };
