@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaymentService } from '../../services/payment.service';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-payment',
@@ -15,7 +16,10 @@ export class PaymentComponent {
   message = '';
   order: any;
 
-  constructor(private paymentService: PaymentService) {}
+  constructor(
+    private paymentService: PaymentService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     this.order = JSON.parse(localStorage.getItem('currentOrder') || '{}');
@@ -47,22 +51,24 @@ export class PaymentComponent {
     this.paymentStatus = 'loading';
     this.message = '🔄 Proveravam status plaćanja...';
 
-    setTimeout(() => {
-      this.paymentService.checkPaymentStatus(this.order.id, this.order.total).subscribe({
-        next: (res) => {
-          if (res.responseCode === '00') {
-            this.paymentStatus = 'success';
-            this.message = '✅ Plaćanje uspešno!';
-          } else {
-            this.paymentStatus = 'fail';
-            this.message = '❌ Plaćanje neuspešno.';
-          }
-        },
-        error: () => {
+    this.paymentService.checkPaymentStatus(this.order.id, this.order.total).subscribe({
+      next: async (res) => {
+        if (res.responseCode === '00') {
+          this.paymentStatus = 'success';
+          this.message = '✅ Plaćanje uspešno!';
+          await this.orderService.updateOrderStatus(this.order.id, 'paid').toPromise();
+        } else {
           this.paymentStatus = 'fail';
-          this.message = '❌ Greška prilikom provere.';
+          this.message = '❌ Plaćanje neuspešno.';
+          await this.orderService.updateOrderStatus(this.order.id, 'failed').toPromise();
         }
-      });
-    }, 1500); // mala animacija čekanja
+      },
+      error: async (err) => {
+        console.error(err);
+        this.paymentStatus = 'fail';
+        this.message = '❌ Greška prilikom provere.';
+        await this.orderService.updateOrderStatus(this.order.id, 'error').toPromise();
+      }
+    });
   }
 }
