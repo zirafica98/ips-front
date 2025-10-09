@@ -1,0 +1,15 @@
+.payment-status.success {
+  text-align: center;
+  margin-top: 50px;
+  color: #2e7d32;
+
+  .btn {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #2e7d32;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+}

@@ -11,7 +11,6 @@ import { OrderService } from '../../services/order.service';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent {
-  qrCodeUrl: string | null = null;
   paymentStatus: 'idle' | 'loading' | 'success' | 'fail' = 'idle';
   message = '';
   order: any;
@@ -23,6 +22,7 @@ export class PaymentComponent {
 
   ngOnInit(): void {
     this.order = JSON.parse(localStorage.getItem('currentOrder') || '{}');
+
     if (this.order?.id) {
       this.startPayment();
     } else {
@@ -32,17 +32,42 @@ export class PaymentComponent {
 
   startPayment(): void {
     this.paymentStatus = 'loading';
-    this.message = '⏳ Generišem IPS QR kod...';
+    this.message = '⏳ Pokrećem plaćanje...';
+
     this.paymentService.createPayment(this.order.id, this.order.total).subscribe({
       next: (res) => {
-        this.qrCodeUrl = res.qrCodeURL;
-        this.paymentStatus = 'idle';
-        this.message = '✅ QR kod je spreman. Skenirajte ga u svojoj mBanking aplikaciji.';
+        // 🚀 Očekujemo plain string iz backend-a (direktni Payten link)
+        const paymentUrl = typeof res === 'string' ? res : '';
+
+        if (!paymentUrl) {
+          this.paymentStatus = 'fail';
+          this.message = '❌ Greška: link za plaćanje nije vraćen.';
+          return;
+        }
+
+        try {
+          const url = new URL(paymentUrl);
+          const isHttps = url.protocol === 'https:';
+          const isPayten = url.hostname.endsWith('pgw.payten.com');
+
+          if (!isHttps || !isPayten) {
+            this.paymentStatus = 'fail';
+            this.message = '❌ Greška: neispravan link za plaćanje.';
+            return;
+          }
+
+          // ✅ Redirekcija na Payten
+          window.location.replace(paymentUrl);
+        } catch (error) {
+          console.error('Invalid URL format:', error);
+          this.paymentStatus = 'fail';
+          this.message = '❌ Greška: neispravan format URL-a.';
+        }
       },
       error: (err) => {
         console.error(err);
         this.paymentStatus = 'fail';
-        this.message = '❌ Greška pri generisanju QR koda.';
+        this.message = '❌ Greška pri pokretanju plaćanja.';
       }
     });
   }

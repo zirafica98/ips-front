@@ -1,0 +1,15 @@
+.payment-status.fail {
+  text-align: center;
+  margin-top: 50px;
+  color: #d32f2f;
+
+  .btn {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #d32f2f;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+}

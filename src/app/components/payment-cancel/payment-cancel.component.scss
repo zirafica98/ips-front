@@ -1,0 +1,15 @@
+.payment-status.cancel {
+  text-align: center;
+  margin-top: 50px;
+  color: #ff9800;
+
+  .btn {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #ff9800;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+}
