@@ -1,9 +1,5 @@
 [build]
-  # OVO JE PODEŠAVANJE PRESUDNO:
-  # 'dist/frontend' je tvoja tačna izlazna putanja
-  publish = "dist/frontend" 
-  
-  # Ova komanda mora da sadrži --base-href / (koje si već dodao u package.json)
+  publish = "dist/frontend/browser" 
   command = "npm run build" 
 
 [[redirects]]
