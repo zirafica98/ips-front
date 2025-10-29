@@ -37,7 +37,23 @@ export class PaymentComponent {
     this.paymentService.createPayment(this.order.id, this.order.total).subscribe({
       next: (res) => {
         // 🚀 Očekujemo plain string iz backend-a (direktni Payten link)
-        const paymentUrl = typeof res === 'string' ? res : '';
+        let paymentUrl = typeof res === 'string' ? res : '';
+
+        // Trim and strip surrounding quotes if present
+        paymentUrl = (paymentUrl || '').trim();
+        if ((paymentUrl.startsWith('"') && paymentUrl.endsWith('"')) || (paymentUrl.startsWith("'") && paymentUrl.endsWith("'"))) {
+          paymentUrl = paymentUrl.slice(1, -1).trim();
+        }
+
+        // If the backend accidentally returned a JSON string like '{ "qrCodeURL": "https://..." }', try to parse it
+        try {
+          const maybe = JSON.parse(paymentUrl);
+          if (maybe && typeof maybe === 'object') {
+            paymentUrl = maybe.qrCodeURL || maybe.qrCodeUrl || maybe.qrUrl || maybe.url || maybe.paymentUrl || paymentUrl;
+          }
+        } catch (_) {
+          // not JSON — ignore
+        }
 
         if (!paymentUrl) {
           this.paymentStatus = 'fail';
@@ -46,7 +62,13 @@ export class PaymentComponent {
         }
 
         try {
-          const url = new URL(paymentUrl);
+          // If protocol is missing, assume https
+          let candidate = paymentUrl;
+          if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(candidate)) {
+            candidate = 'https://' + candidate;
+          }
+
+          const url = new URL(candidate);
           const isHttps = url.protocol === 'https:';
           const isPayten = url.hostname.endsWith('pgw.payten.com');
 
@@ -57,7 +79,7 @@ export class PaymentComponent {
           }
 
           // ✅ Redirekcija na Payten
-          window.location.replace(paymentUrl);
+          window.location.replace(url.toString());
         } catch (error) {
           console.error('Invalid URL format:', error);
           this.paymentStatus = 'fail';

@@ -22,6 +22,9 @@
         mat-button
         routerLink="/cart"
         routerLinkActive="active-link"
+        matBadge="{{ (cartCount$ | async) || 0 }}"
+        matBadgeColor="accent"
+        matBadgeHidden="{{ ((cartCount$ | async) || 0) === 0 }}"
       >
         <mat-icon>shopping_cart</mat-icon>
         Korpa
