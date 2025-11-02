@@ -32,64 +32,80 @@ export class PaymentComponent {
 
   startPayment(): void {
     this.paymentStatus = 'loading';
-    this.message = '⏳ Pokrećem plaćanje...';
+    this.message = '⏳ Prvo generišem token...';
 
-    this.paymentService.createPayment(this.order.id, this.order.total).subscribe({
-      next: (res) => {
-        // 🚀 Očekujemo plain string iz backend-a (direktni Payten link)
-        let paymentUrl = typeof res === 'string' ? res : '';
-
-        // Trim and strip surrounding quotes if present
-        paymentUrl = (paymentUrl || '').trim();
-        if ((paymentUrl.startsWith('"') && paymentUrl.endsWith('"')) || (paymentUrl.startsWith("'") && paymentUrl.endsWith("'"))) {
-          paymentUrl = paymentUrl.slice(1, -1).trim();
-        }
-
-        // If the backend accidentally returned a JSON string like '{ "qrCodeURL": "https://..." }', try to parse it
-        try {
-          const maybe = JSON.parse(paymentUrl);
-          if (maybe && typeof maybe === 'object') {
-            paymentUrl = maybe.qrCodeURL || maybe.qrCodeUrl || maybe.qrUrl || maybe.url || maybe.paymentUrl || paymentUrl;
-          }
-        } catch (_) {
-          // not JSON — ignore
-        }
-
-        if (!paymentUrl) {
+    this.paymentService.generateToken().subscribe({
+      next: (token) => {
+        if (!token) {
           this.paymentStatus = 'fail';
-          this.message = '❌ Greška: link za plaćanje nije vraćen.';
+          this.message = '❌ Token nije generisan.';
           return;
         }
+        this.message = '✅ Token generisan, pokrećem plaćanje...';
 
-        try {
-          // If protocol is missing, assume https
-          let candidate = paymentUrl;
-          if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(candidate)) {
-            candidate = 'https://' + candidate;
-          }
+        this.paymentService.createPayment(this.order.id, this.order.total).subscribe({
+          next: (res) => {
+            // 🚀 Očekujemo plain string iz backend-a (direktni Payten link)
+            let paymentUrl = typeof res === 'string' ? res : '';
 
-          const url = new URL(candidate);
-          const isHttps = url.protocol === 'https:';
-          const isPayten = url.hostname.endsWith('pgw.payten.com');
+            // Trim and strip surrounding quotes if present
+            paymentUrl = (paymentUrl || '').trim();
+            if ((paymentUrl.startsWith('"') && paymentUrl.endsWith('"')) || (paymentUrl.startsWith("'") && paymentUrl.endsWith("'"))) {
+              paymentUrl = paymentUrl.slice(1, -1).trim();
+            }
 
-          if (!isHttps || !isPayten) {
+            // If the backend accidentally returned a JSON string like '{ "qrCodeURL": "https://..." }', try to parse it
+            try {
+              const maybe = JSON.parse(paymentUrl);
+              if (maybe && typeof maybe === 'object') {
+                paymentUrl = maybe.qrCodeURL || maybe.qrCodeUrl || maybe.qrUrl || maybe.url || maybe.paymentUrl || paymentUrl;
+              }
+            } catch (_) {
+              // not JSON — ignore
+            }
+
+            if (!paymentUrl) {
+              this.paymentStatus = 'fail';
+              this.message = '❌ Greška: link za plaćanje nije vraćen.';
+              return;
+            }
+
+            try {
+              // If protocol is missing, assume https
+              let candidate = paymentUrl;
+              if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(candidate)) {
+                candidate = 'https://' + candidate;
+              }
+
+              const url = new URL(candidate);
+              const isHttps = url.protocol === 'https:';
+              const isPayten = url.hostname.endsWith('pgw.payten.com');
+
+              if (!isHttps || !isPayten) {
+                this.paymentStatus = 'fail';
+                this.message = '❌ Greška: neispravan link za plaćanje.';
+                return;
+              }
+
+              // ✅ Redirekcija na Payten
+              window.location.replace(url.toString());
+            } catch (error) {
+              console.error('Invalid URL format:', error);
+              this.paymentStatus = 'fail';
+              this.message = '❌ Greška: neispravan format URL-a.';
+            }
+          },
+          error: (err) => {
+            console.error(err);
             this.paymentStatus = 'fail';
-            this.message = '❌ Greška: neispravan link za plaćanje.';
-            return;
+            this.message = '❌ Greška pri pokretanju plaćanja.';
           }
-
-          // ✅ Redirekcija na Payten
-          window.location.replace(url.toString());
-        } catch (error) {
-          console.error('Invalid URL format:', error);
-          this.paymentStatus = 'fail';
-          this.message = '❌ Greška: neispravan format URL-a.';
-        }
+        });
       },
       error: (err) => {
         console.error(err);
         this.paymentStatus = 'fail';
-        this.message = '❌ Greška pri pokretanju plaćanja.';
+        this.message = '❌ Greška pri generisanju tokena.';
       }
     });
   }

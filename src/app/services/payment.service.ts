@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, catchError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
+
+  generateToken(): Observable<string> {
+    return this.http.get<{ token: string }>(`${this.apiUrl}/token`).pipe(
+      map((res) => res.token)
+    );
+  }
   private apiUrl = `${environment.apiUrl.replace('/api', '')}/api/payment`;
 
   constructor(private http: HttpClient) {}
