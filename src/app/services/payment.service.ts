@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 export class PaymentService {
 
   generateToken(): Observable<string> {
-    return this.http.get<{ token: string }>(`${this.apiUrl}/token`).pipe(
+    return this.http.post<{ token: string }>(`${this.apiUrl}/token`, {}).pipe(
       map((res) => res.token)
     );
   }
