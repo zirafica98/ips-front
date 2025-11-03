@@ -1,15 +1,56 @@
 .payment-status.success {
   text-align: center;
-  margin-top: 50px;
+  margin: 30px auto;
   color: #2e7d32;
+  max-width: 720px;
+}
 
-  .btn {
-    display: inline-block;
-    margin-top: 20px;
-    background-color: #2e7d32;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 6px;
-    text-decoration: none;
+.payment-status.success .subtitle {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.receipt {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 16px;
+  text-align: left;
+  margin: 0 auto 20px auto;
+}
+
+.receipt .row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.receipt .row:last-child {
+  border-bottom: none;
+}
+
+.receipt .row span {
+  color: #555;
+}
+
+.receipt .row strong {
+  color: #000;
+}
+
+.payment-status.success .btn {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #2e7d32;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .receipt .row {
+    flex-direction: column;
+    gap: 4px;
   }
 }

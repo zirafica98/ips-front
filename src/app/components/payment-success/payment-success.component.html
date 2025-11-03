@@ -1,5 +1,21 @@
 <div class="payment-status success">
-  <h2>{{ message }}</h2>
-  <p>Hvala na kupovini! Vaša uplata je uspešno evidentirana.</p>
+  <h2>Uspešno plaćanje metodom IPS skeniraj</h2>
+  <p class="subtitle">Hvala na kupovini! Vaša uplata je uspešno evidentirana.</p>
+
+  <div class="receipt">
+    <div class="row"><span>Broj porudžbine:</span><strong>{{ orderId }}</strong></div>
+    <div class="row"><span>Iznos:</span><strong>{{ amount }}</strong></div>
+    <div class="row"><span>Datum uplate:</span><strong>{{ now | date:'dd.MM.yyyy. HH:mm' }}</strong></div>
+    <div class="row"><span>Platilac:</span><strong>{{ payer }}</strong></div>
+    <div class="row"><span>E-adresa platioca:</span><strong>{{ payerEmail }}</strong></div>
+    <div class="row"><span>Poziv na broj:</span><strong>{{ reference }}</strong></div>
+    <div class="row"><span>Primalac:</span><strong>{{ receiverName }}</strong></div>
+    <div class="row"><span>Adresa primaoca:</span><strong>{{ receiverAddress }}</strong></div>
+    <div class="row"><span>E-adresa primaoca:</span><strong>{{ receiverEmail }}</strong></div>
+    <div class="row"><span>PIB primaoca:</span><strong>{{ receiverPIB }}</strong></div>
+    <div class="row"><span>Matični broj primaoca:</span><strong>{{ receiverMB }}</strong></div>
+    <div class="row"><span>Broj računa primaoca:</span><strong>{{ receiverAccount }}</strong></div>
+  </div>
+
   <a routerLink="/" class="btn">Nazad na početnu</a>
 </div>

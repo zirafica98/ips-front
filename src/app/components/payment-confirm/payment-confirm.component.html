@@ -1,0 +1,18 @@
+<div class="confirm-container">
+  <h2>Potvrda IPS plaćanja</h2>
+
+  <div class="info">
+    <p>Na sledećem koraku bićete preusmereni na stranicu za skeniranje IPS QR koda (Payten).</p>
+    <p>Proverite još jednom podatke o porudžbini i pripremite aplikaciju banke za skeniranje.</p>
+  </div>
+
+  <label class="terms">
+    <input type="checkbox" [(ngModel)]="accepted" />
+  <span>Saglasan/na sam sa <a routerLink="/terms" target="_blank" class="terms-link">Uslovima korišćenja</a>.</span>
+  </label>
+
+  <div class="actions">
+    <button class="btn cancel" (click)="cancel()">Odustani</button>
+    <button class="btn primary" [disabled]="!accepted" (click)="proceed()">Plati</button>
+  </div>
+</div>

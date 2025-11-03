@@ -30,3 +30,21 @@
     margin-top: 1rem;
   }
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .checkout-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .checkout-container input {
+    font-size: 16px; /* sprečava iOS zoom */
+    padding: 0.8rem;
+  }
+
+  .checkout-container button {
+    width: 100%;
+    padding: 0.9rem 1rem;
+  }
+}

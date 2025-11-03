@@ -89,3 +89,38 @@
     }
   }
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-container {
+    padding: 1rem;
+  }
+
+  .product-container .title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .product-container .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .product-container .product-card .product-image {
+    height: 140px;
+  }
+
+  .product-container .product-card .product-info h3 {
+    font-size: 1rem;
+  }
+
+  .product-container .product-card .product-info .description {
+    height: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .product-container .product-grid {
+    grid-template-columns: 1fr; /* jedna kolona na najužim ekranima */
+  }
+}

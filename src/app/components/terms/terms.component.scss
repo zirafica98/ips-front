@@ -1,0 +1,15 @@
+.terms-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .terms-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}

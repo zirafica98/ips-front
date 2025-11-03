@@ -15,7 +15,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <mat-icon>storefront</mat-icon>
-        Proizvodi
+        <span class="link-text">Proizvodi</span>
       </a>
 
       <a
@@ -27,7 +27,7 @@
         matBadgeHidden="{{ ((cartCount$ | async) || 0) === 0 }}"
       >
         <mat-icon>shopping_cart</mat-icon>
-        Korpa
+        <span class="link-text">Korpa</span>
       </a>
 
       <a
@@ -36,7 +36,7 @@
         routerLinkActive="active-link"
       >
         <mat-icon>credit_card</mat-icon>
-        Plaćanje
+        <span class="link-text">Plaćanje</span>
       </a>
     </nav>
   </div>

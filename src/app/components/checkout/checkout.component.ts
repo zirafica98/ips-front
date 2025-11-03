@@ -54,8 +54,8 @@ export class CheckoutComponent {
           'currentOrder',
           JSON.stringify({ ...orderData, id: res.id })
         );
-        this.loading = false;
-        this.router.navigate(['/payment']);
+  this.loading = false;
+  this.router.navigate(['/payment-method']);
       },
       error: (err) => {
         console.error('❌ Error creating order:', err);

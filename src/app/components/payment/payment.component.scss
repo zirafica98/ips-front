@@ -24,6 +24,23 @@
   }
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+  .payment-container {
+    padding: 1rem;
+  }
+
+  .message {
+    font-size: 0.95rem;
+  }
+
+  .pay-btn {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1.05rem;
+  }
+}
+
 .pay-btn {
   background-color: #1976d2;
   color: white;

@@ -59,3 +59,43 @@
 .page-content {
   padding: 24px;
 }
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .main-toolbar {
+    height: 56px;
+  }
+
+  .toolbar-container {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .nav-links {
+    gap: 6px;
+  }
+
+  .nav-links a {
+    min-width: auto;
+    padding: 6px 8px;
+  }
+
+  /* Sakrij tekst linkova na manjim ekranima, ostavi samo ikone */
+  .nav-links .link-text {
+    display: none;
+  }
+
+  .page-content {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo .title {
+    display: none; /* ostavi samo ikonicu */
+  }
+}

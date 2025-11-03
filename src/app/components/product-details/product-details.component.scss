@@ -8,3 +8,14 @@ h2 {
   text-align: center;
   margin-bottom: 20px;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  mat-card {
+    margin: 12px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+}

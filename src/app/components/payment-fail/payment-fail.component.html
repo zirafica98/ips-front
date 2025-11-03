@@ -1,5 +1,24 @@
 <div class="payment-status fail">
-  <h2>{{ message }}</h2>
-  <p>Došlo je do greške prilikom plaćanja. Pokušajte ponovo.</p>
-  <a routerLink="/checkout" class="btn">Vrati se na plaćanje</a>
+  <h2>Plaćanje IPS metodom nije kompletirano</h2>
+  <p class="subtitle">Proces plaćanja koje ste započeli metodom IPS skeniraj niste sproveli do kraja. Uplata koju ste pokušali nije izvršena.</p>
+
+  <div class="receipt">
+    <div class="row"><span>Broj porudžbine:</span><strong>{{ orderId }}</strong></div>
+    <div class="row"><span>Iznos:</span><strong>{{ amount }}</strong></div>
+    <div class="row"><span>Datum:</span><strong>{{ now | date:'dd.MM.yyyy. HH:mm' }}</strong></div>
+    <div class="row"><span>Platilac:</span><strong>{{ payer }}</strong></div>
+    <div class="row"><span>E-adresa platioca:</span><strong>{{ payerEmail }}</strong></div>
+    <div class="row"><span>Poziv na broj:</span><strong>{{ reference }}</strong></div>
+    <div class="row"><span>Primalac:</span><strong>{{ receiverName }}</strong></div>
+    <div class="row"><span>Adresa primaoca:</span><strong>{{ receiverAddress }}</strong></div>
+    <div class="row"><span>E-adresa primaoca:</span><strong>{{ receiverEmail }}</strong></div>
+    <div class="row"><span>PIB primaoca:</span><strong>{{ receiverPIB }}</strong></div>
+    <div class="row"><span>Matični broj primaoca:</span><strong>{{ receiverMB }}</strong></div>
+    <div class="row"><span>Broj računa primaoca:</span><strong>{{ receiverAccount }}</strong></div>
+  </div>
+
+  <div class="actions">
+    <a routerLink="/payment-method" class="btn primary">Pokušaj ponovo</a>
+    <a routerLink="/cart" class="btn">Nazad u korpu</a>
+  </div>
 </div>

@@ -1,0 +1,79 @@
+.payment-method-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.methods {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.method-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fafafa;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.method-card:hover {
+  background: #f5f5f5;
+  border-color: #bdbdbd;
+}
+
+.logo-placeholder {
+  width: 80px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px dashed #c5c5c5;
+  border-radius: 8px;
+  position: relative;
+}
+
+.logo-placeholder img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.logo-placeholder .fallback {
+  font-size: 12px;
+  color: #888;
+  position: absolute;
+}
+
+.info h3 {
+  margin: 0 0 4px 0;
+}
+
+.note {
+  color: #666;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .payment-method-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .method-card {
+    flex-direction: row;
+  }
+}
