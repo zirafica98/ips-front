@@ -10,11 +10,59 @@
   </div>
 
   <h3>Podaci za isporuku</h3>
-  <form (ngSubmit)="submitOrder()" #checkoutForm="ngForm">
-    <input type="text" placeholder="Ime i prezime" [(ngModel)]="name" name="name" required />
-    <input type="text" placeholder="Adresa" [(ngModel)]="address" name="address" required />
-    <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+  <form (ngSubmit)="submitOrder()" #checkoutForm="ngForm" novalidate>
+    <input
+      type="text"
+      placeholder="Ime i prezime"
+      [(ngModel)]="name"
+      name="name"
+      required
+      minlength="3"
+      maxlength="40"
+      pattern="^[A-Za-zČčĆćŠšĐđŽž\-' ]+$"
+      #nameField="ngModel"
+    />
+    <div class="error" *ngIf="nameField.invalid && nameField.touched">
+  <span *ngIf="nameField.errors?.['required']">Ime i prezime je obavezno.</span>
+    <span *ngIf="nameField.errors?.['minlength']">Ime mora imati bar 3 karaktera.</span>
+    <span *ngIf="nameField.errors?.['maxlength']">Ime je predugačko.</span>
+  <span *ngIf="nameField.errors?.['pattern']">Dozvoljena su samo slova i razmak.</span>
+    </div>
 
-    <button type="submit">Idi na plaćanje</button>
+    <input
+      type="text"
+      placeholder="Adresa"
+      [(ngModel)]="address"
+      name="address"
+      required
+      minlength="5"
+      maxlength="60"
+      pattern="^[A-Za-z0-9ČčĆćŠšĐđŽž\-' ,.]+$"
+      #addressField="ngModel"
+    />
+    <div class="error" *ngIf="addressField.invalid && addressField.touched">
+  <span *ngIf="addressField.errors?.['required']">Adresa je obavezna.</span>
+    <span *ngIf="addressField.errors?.['minlength']">Adresa mora imati bar 5 karaktera.</span>
+    <span *ngIf="addressField.errors?.['maxlength']">Adresa je predugačka.</span>
+  <span *ngIf="addressField.errors?.['pattern']">Dozvoljena su slova, brojevi, razmak, zarez, tačka.</span>
+    </div>
+
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="email"
+      name="email"
+      required
+      maxlength="50"
+      email
+      #emailField="ngModel"
+    />
+    <div class="error" *ngIf="emailField.invalid && emailField.touched">
+  <span *ngIf="emailField.errors?.['required']">Email je obavezan.</span>
+  <span *ngIf="emailField.errors?.['email']">Email nije validan.</span>
+    <span *ngIf="emailField.errors?.['maxlength']">Email je predugačak.</span>
+    </div>
+
+    <button type="submit" [disabled]="checkoutForm.invalid || loading">Idi na plaćanje</button>
   </form>
 </div>
