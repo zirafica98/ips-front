@@ -1,14 +1,24 @@
-<h2>🛒 Tvoja korpa</h2>
 
-<mat-card *ngIf="items.length > 0; else emptyCart" class="cart-card">
+<h2 class="cart-title">🛒 Tvoja korpa</h2>
+
+<mat-card *ngIf="items.length > 0; else emptyCart" class="cart-card modern">
   <mat-list>
-    <mat-list-item *ngFor="let item of items">
-      {{ item.name }} — {{ item.price }} €
+    <mat-list-item *ngFor="let item of items; let i = index" class="cart-list-item">
+      <div class="cart-row-grid">
+        <div class="cart-col cart-name">{{ item.name }}</div>
+        <div class="cart-col cart-label">Cena:</div>
+        <div class="cart-col cart-price">{{ item.price | number:'1.2-2' }} RSD</div>
+        <div class="cart-col cart-delete">
+          <button mat-icon-button color="warn" aria-label="Ukloni" (click)="removeItem(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
     </mat-list-item>
   </mat-list>
 
-  <div class="total">
-    <p><strong>Ukupno:</strong> {{ total }} €</p>
+  <div class="total modern-total">
+    <p><strong>Ukupno:</strong> <span class="total-amount">{{ total | number:'1.2-2' }} RSD</span></p>
   </div>
 
   <div class="actions">

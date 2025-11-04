@@ -29,6 +29,14 @@ export class CartService {
     return this.items;
   }
 
+
+  removeItem(index: number) {
+    if (index > -1 && index < this.items.length) {
+      this.items.splice(index, 1);
+      this.emitCount();
+    }
+  }
+
   clearCart() {
     this.items = [];
     this.emitCount();

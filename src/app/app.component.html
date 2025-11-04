@@ -2,8 +2,8 @@
   <div class="toolbar-container">
     <!-- Logo sekcija -->
     <div class="logo" routerLink="/">
-      <mat-icon>shopping_bag</mat-icon>
-      <span class="title">IPS Store</span>
+      <mat-icon>build_circle</mat-icon>
+      <span class="title">Automehaničarske usluge</span>
     </div>
 
     <!-- Navigacioni linkovi -->
@@ -30,14 +30,6 @@
         <span class="link-text">Korpa</span>
       </a>
 
-      <a
-        mat-button
-        routerLink="/checkout"
-        routerLinkActive="active-link"
-      >
-        <mat-icon>credit_card</mat-icon>
-        <span class="link-text">Plaćanje</span>
-      </a>
     </nav>
   </div>
 </mat-toolbar>
@@ -45,3 +37,4 @@
 <div class="page-content">
   <router-outlet></router-outlet>
 </div>
+<app-footer></app-footer>

@@ -56,8 +56,21 @@
   background-color: rgba(255, 255, 255, 0.25);
 }
 
+
+/* Layout za sticky footer */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .page-content {
+  flex: 1 0 auto;
   padding: 24px;
+}
+
+.main-footer {
+  flex-shrink: 0;
 }
 
 /* Responsive tweaks */

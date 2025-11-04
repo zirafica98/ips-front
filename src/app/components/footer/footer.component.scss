@@ -1,0 +1,31 @@
+.main-footer {
+  width: 100%;
+  background: #f5f5f5;
+  color: #333;
+  padding: 1.2rem 0;
+  text-align: center;
+  font-size: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+.firm-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.firm-email a {
+  color: #1976d2;
+  text-decoration: none;
+}
+.firm-email a:hover {
+  text-decoration: underline;
+}
+.footer-year {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  color: #888;
+}
