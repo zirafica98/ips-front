@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  loading = true;
 
   constructor(private server: ServerService, private cart: CartService) {}
 
@@ -20,9 +21,16 @@ export class ProductListComponent implements OnInit {
   }
 
   loadProducts(): void {
+    this.loading = true;
     this.server.getProducts().subscribe({
-      next: (data) => this.products = data,
-      error: (err) => console.error('Greška pri učitavanju proizvoda:', err)
+      next: (data) => {
+        this.products = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Greška pri učitavanju proizvoda:', err);
+        this.loading = false;
+      }
     });
   }
 

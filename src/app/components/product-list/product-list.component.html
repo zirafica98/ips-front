@@ -1,7 +1,12 @@
 <div class="product-container">
   <h2 class="title">Automehaničarske usluge</h2>
 
-  <div class="product-grid">
+  <div *ngIf="loading" class="loader-container">
+    <div class="loader"></div>
+    <p>Učitavanje proizvoda...</p>
+  </div>
+
+  <div class="product-grid" *ngIf="!loading">
     <div class="product-card" *ngFor="let product of products">
       <img src="assets/productImage.jpg" [alt]="product.name" class="product-image" />
 

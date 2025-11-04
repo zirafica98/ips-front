@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Automehaničarske usluge';
+  title = 'PILE S.Z.A.R';
   cartCount$: Observable<number>;
 
   constructor(private cartService: CartService) {
