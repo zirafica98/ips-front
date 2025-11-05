@@ -26,7 +26,7 @@ export class PaymentComponent {
     if (this.order?.id) {
       this.startPayment();
     } else {
-      this.message = '❌ Nema aktivne porudžbine.';
+      this.message = 'Nema aktivne porudžbine.';
     }
   }
 
@@ -38,10 +38,10 @@ export class PaymentComponent {
       next: (token) => {
         if (!token) {
           this.paymentStatus = 'fail';
-          this.message = '❌ Token nije generisan.';
+          this.message = 'Token nije generisan.';
           return;
         }
-        this.message = '✅ Token generisan, pokrećem plaćanje...';
+        this.message = 'Token generisan, pokrećem plaćanje...';
 
         this.paymentService.createPayment(this.order.id, this.order.total).subscribe({
           next: (res) => {
@@ -66,7 +66,7 @@ export class PaymentComponent {
 
             if (!paymentUrl) {
               this.paymentStatus = 'fail';
-              this.message = '❌ Greška: link za plaćanje nije vraćen.';
+              this.message = 'Greška: link za plaćanje nije vraćen.';
               return;
             }
 
@@ -83,7 +83,7 @@ export class PaymentComponent {
 
               if (!isHttps || !isPayten) {
                 this.paymentStatus = 'fail';
-                this.message = '❌ Greška: neispravan link za plaćanje.';
+                this.message = 'Greška: neispravan link za plaćanje.';
                 return;
               }
 
@@ -92,27 +92,27 @@ export class PaymentComponent {
             } catch (error) {
               console.error('Invalid URL format:', error);
               this.paymentStatus = 'fail';
-              this.message = '❌ Greška: neispravan format URL-a.';
+              this.message = 'Greška: neispravan format URL-a.';
             }
           },
           error: (err) => {
             console.error(err);
             this.paymentStatus = 'fail';
-            this.message = '❌ Greška pri pokretanju plaćanja.';
+            this.message = 'Greška pri pokretanju plaćanja.';
           }
         });
       },
       error: (err) => {
         console.error(err);
         this.paymentStatus = 'fail';
-        this.message = '❌ Greška pri generisanju tokena.';
+        this.message = 'Greška pri generisanju tokena.';
       }
     });
   }
 
   checkStatus(): void {
     this.paymentStatus = 'loading';
-    this.message = '🔄 Proveravam status plaćanja...';
+    this.message = 'Proveravam status plaćanja...';
 
     this.paymentService.checkPaymentStatus(this.order.id, this.order.total).subscribe({
       next: async (res) => {
@@ -122,14 +122,14 @@ export class PaymentComponent {
           await this.orderService.updateOrderStatus(this.order.id, 'paid').toPromise();
         } else {
           this.paymentStatus = 'fail';
-          this.message = '❌ Plaćanje neuspešno.';
+          this.message = 'Plaćanje neuspešno.';
           await this.orderService.updateOrderStatus(this.order.id, 'failed').toPromise();
         }
       },
       error: async (err) => {
         console.error(err);
         this.paymentStatus = 'fail';
-        this.message = '❌ Greška prilikom provere.';
+        this.message = 'Greška prilikom provere.';
         await this.orderService.updateOrderStatus(this.order.id, 'error').toPromise();
       }
     });

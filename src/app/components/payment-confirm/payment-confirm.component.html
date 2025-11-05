@@ -1,9 +1,44 @@
 <div class="confirm-container">
-  <h2>Potvrda IPS plaćanja</h2>
+  <h2>Potvrda IPS skeniraj</h2>
 
   <div class="info">
-    <p>Na sledećem koraku bićete preusmereni na stranicu za skeniranje IPS QR koda (Payten).</p>
-    <p>Proverite još jednom podatke o porudžbini i pripremite aplikaciju banke za skeniranje.</p>
+    <p>Na sledećem koraku bićete preusmereni na stranicu za plaćanje.</p>
+    <p>Proverite još jednom podatke o porudžbini.</p>
+  </div>
+
+  <!-- Order Review -->
+  <div class="review" *ngIf="items?.length">
+    <div class="review-header">
+      <span class="icon"></span>
+      <h3>Pregled porudžbine</h3>
+      <div class="summary">
+        <span class="chip">{{ items.length }} artikla</span>
+        <span class="chip primary">Ukupno: {{ total | currency:'RSD' }}</span>
+      </div>
+    </div>
+
+    <div class="customer card">
+      <div class="row"><span class="label">Ime i prezime</span><span class="value">{{ name || '-' }}</span></div>
+      <div class="row"><span class="label">Adresa</span><span class="value">{{ address || '-' }}</span></div>
+      <div class="row"><span class="label">Email</span><span class="value">{{ email || '-' }}</span></div>
+      <div class="row" *ngIf="orderId"><span class="label">Broj porudžbine</span><span class="value">{{ orderId }}</span></div>
+    </div>
+
+    <div class="items card">
+      <div class="items-header">
+        <span>Artikal</span>
+        <span class="price-col">Cena</span>
+      </div>
+      <div class="item" *ngFor="let it of items">
+        <span class="name">{{ it.name }}</span>
+        <span class="price">{{ it.price | currency:'RSD' }}</span>
+      </div>
+    </div>
+
+    <div class="total-row">
+      <span>Ukupno</span>
+      <strong>{{ total | currency:'RSD ' }}</strong>
+    </div>
   </div>
 
   <label class="terms">
